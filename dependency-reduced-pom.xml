@@ -177,39 +177,15 @@
   </repositories>
   <dependencies>
     <dependency>
-      <groupId>org.spigotmc</groupId>
-      <artifactId>spigot-api</artifactId>
-      <version>1.12.2-R0.1-SNAPSHOT</version>
-      <scope>provided</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>commons-lang</artifactId>
-          <groupId>commons-lang</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>json-simple</artifactId>
-          <groupId>com.googlecode.json-simple</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>gson</artifactId>
-          <groupId>com.google.code.gson</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>snakeyaml</artifactId>
-          <groupId>org.yaml</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>bungeecord-chat</artifactId>
-          <groupId>net.md-5</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
       <groupId>net.md-5</groupId>
       <artifactId>bungeecord-api</artifactId>
       <version>1.12-SNAPSHOT</version>
       <scope>provided</scope>
       <exclusions>
+        <exclusion>
+          <artifactId>bungeecord-chat</artifactId>
+          <groupId>net.md-5</groupId>
+        </exclusion>
         <exclusion>
           <artifactId>bungeecord-config</artifactId>
           <groupId>net.md-5</groupId>
@@ -220,10 +196,6 @@
         </exclusion>
         <exclusion>
           <artifactId>bungeecord-protocol</artifactId>
-          <groupId>net.md-5</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>bungeecord-chat</artifactId>
           <groupId>net.md-5</groupId>
         </exclusion>
       </exclusions>
@@ -264,6 +236,13 @@
     </dependency>
     <dependency>
       <groupId>cb</groupId>
+      <artifactId>spigot</artifactId>
+      <version>1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/spigot-1.12.2.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>cb</groupId>
       <artifactId>craftbukkit-1.14.2</artifactId>
       <version>1</version>
       <scope>system</scope>
@@ -271,10 +250,17 @@
     </dependency>
     <dependency>
       <groupId>cb</groupId>
-      <artifactId>craftbukkit-1.13.2</artifactId>
+      <artifactId>craftbukkit-1.13</artifactId>
       <version>1</version>
       <scope>system</scope>
       <systemPath>${project.basedir}/lib/craftbukkit-1.13.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>cb</groupId>
+      <artifactId>craftbukkit-1.13.2</artifactId>
+      <version>1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/craftbukkit-1.13.2.jar</systemPath>
     </dependency>
     <dependency>
       <groupId>cb</groupId>
@@ -317,6 +303,20 @@
       <version>1</version>
       <scope>system</scope>
       <systemPath>${project.basedir}/lib/craftbukkit-1.8.8.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>cbx</groupId>
+      <artifactId>lightapi</artifactId>
+      <version>1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/LightAPI.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>cbx</groupId>
+      <artifactId>dom4j</artifactId>
+      <version>1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/dom4j-2.1.1.jar</systemPath>
     </dependency>
   </dependencies>
   <distributionManagement>
