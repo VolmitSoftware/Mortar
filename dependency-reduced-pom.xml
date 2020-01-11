@@ -4,7 +4,7 @@
   <groupId>com.volmit</groupId>
   <artifactId>Mortar</artifactId>
   <name>Mortar</name>
-  <version>1.0.71</version>
+  <version>1.0.72</version>
   <description>That crap between the bricks</description>
   <developers>
     <developer>
@@ -150,8 +150,8 @@
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
     <repository>
-      <id>volmit</id>
-      <url>http://nexus.volmit.com/content/repositories/volmit</url>
+      <id>pub</id>
+      <url>http://nexus.mpm.com/content/repositories/pub</url>
     </repository>
     <repository>
       <id>fawe</id>
@@ -170,35 +170,39 @@
       <url>http://repo.extendedclip.com/content/repositories/placeholderapi/</url>
     </repository>
     <repository>
-      <id>public</id>
-      <name>Public Repositories</name>
+      <id>mvdw-software</id>
+      <name>MVdW Public Repositories</name>
       <url>http://repo.mvdw-software.be/content/groups/public/</url>
     </repository>
   </repositories>
   <dependencies>
     <dependency>
       <groupId>org.spigotmc</groupId>
-      <artifactId>spigot</artifactId>
-      <version>1.12.2</version>
+      <artifactId>spigot-api</artifactId>
+      <version>1.12.2-R0.1-SNAPSHOT</version>
       <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.bukkit</groupId>
-      <artifactId>craftbukkit14</artifactId>
-      <version>1.14.2</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.bukkit</groupId>
-      <artifactId>craftbukkit13</artifactId>
-      <version>1.13.2</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.bukkit</groupId>
-      <artifactId>craftbukkit12</artifactId>
-      <version>1.12.2</version>
-      <scope>provided</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-lang</artifactId>
+          <groupId>commons-lang</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>json-simple</artifactId>
+          <groupId>com.googlecode.json-simple</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>gson</artifactId>
+          <groupId>com.google.code.gson</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>snakeyaml</artifactId>
+          <groupId>org.yaml</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>bungeecord-chat</artifactId>
+          <groupId>net.md-5</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>net.md-5</groupId>
@@ -206,10 +210,6 @@
       <version>1.12-SNAPSHOT</version>
       <scope>provided</scope>
       <exclusions>
-        <exclusion>
-          <artifactId>bungeecord-chat</artifactId>
-          <groupId>net.md-5</groupId>
-        </exclusion>
         <exclusion>
           <artifactId>bungeecord-config</artifactId>
           <groupId>net.md-5</groupId>
@@ -222,37 +222,11 @@
           <artifactId>bungeecord-protocol</artifactId>
           <groupId>net.md-5</groupId>
         </exclusion>
+        <exclusion>
+          <artifactId>bungeecord-chat</artifactId>
+          <groupId>net.md-5</groupId>
+        </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.bukkit</groupId>
-      <artifactId>craftbukkit11</artifactId>
-      <version>1.11.2</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.bukkit</groupId>
-      <artifactId>craftbukkit10</artifactId>
-      <version>1.10.2</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.bukkit</groupId>
-      <artifactId>craftbukkit94</artifactId>
-      <version>1.9.4</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.bukkit</groupId>
-      <artifactId>craftbukkit92</artifactId>
-      <version>1.9.2</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.bukkit</groupId>
-      <artifactId>craftbukkit18</artifactId>
-      <version>1.8.8</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.comphenix.protocol</groupId>
@@ -283,22 +257,66 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>be.maximvdw</groupId>
-      <artifactId>MVdWPlaceholderAPI</artifactId>
-      <version>2.5.2</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>ru.beykerykt</groupId>
-      <artifactId>LightAPI</artifactId>
-      <version>3.2.7</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.18.4</version>
       <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>cb</groupId>
+      <artifactId>craftbukkit-1.14.2</artifactId>
+      <version>1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/craftbukkit-1.14.2.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>cb</groupId>
+      <artifactId>craftbukkit-1.13.2</artifactId>
+      <version>1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/craftbukkit-1.13.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>cb</groupId>
+      <artifactId>craftbukkit-1.12.2</artifactId>
+      <version>1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/craftbukkit-1.12.2.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>cb</groupId>
+      <artifactId>craftbukkit-1.11.2</artifactId>
+      <version>1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/craftbukkit-1.11.2.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>cb</groupId>
+      <artifactId>craftbukkit-1.10.2</artifactId>
+      <version>1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/craftbukkit-1.10.2.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>cb</groupId>
+      <artifactId>craftbukkit-1.9.4</artifactId>
+      <version>1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/craftbukkit-1.9.4.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>cb</groupId>
+      <artifactId>craftbukkit-1.9.2</artifactId>
+      <version>1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/craftbukkit-1.9.2.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>cb</groupId>
+      <artifactId>craftbukkit-1.8.8</artifactId>
+      <version>1</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/lib/craftbukkit-1.8.8.jar</systemPath>
     </dependency>
   </dependencies>
   <distributionManagement>
@@ -308,14 +326,14 @@
     </repository>
   </distributionManagement>
   <properties>
-    <api.version>3</api.version>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <development.location>${user.home}\Documents\development\servers\dynamic\plugins\${project.name}.jar</development.location>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <javadoc.opts>-Xdoclint:none</javadoc.opts>
     <skip.copy>false</skip.copy>
+    <api.version>3</api.version>
     <libs>${project.basedir}/lib</libs>
+    <development.location>${user.home}\Documents\development\servers\dynamic\plugins\${project.name}.jar</development.location>
+    <javadoc.opts>-Xdoclint:none</javadoc.opts>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 </project>
 
