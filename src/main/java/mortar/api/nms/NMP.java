@@ -33,9 +33,12 @@ public class NMP
 
 		public static void sendTablist(Player p, String h, String f)
 		{
-			try {
+			try
+			{
 				new PacketBuffer().q(host.packetTabHeaderFooter(h, f)).flush(p);
-			} catch (Exception ex) {
+			}
+			catch(Exception ex)
+			{
 			}
 		}
 
@@ -182,6 +185,13 @@ public class NMP
 			}
 		}
 
+		public static void refreshIgnorePosition(Player p, Chunk at)
+		{
+			unloadIgnorePosition(p, at);
+
+			host.sendPacket(p, host.packetChunkFullSend(at));
+		}
+
 		/**
 		 * Unload the specified chunk
 		 *
@@ -196,6 +206,11 @@ public class NMP
 			{
 				host.sendPacket(p, host.packetChunkUnload(at.getX(), at.getZ()));
 			}
+		}
+
+		public static void unloadIgnorePosition(Player p, Chunk at)
+		{
+			host.sendPacket(p, host.packetChunkUnload(at.getX(), at.getZ()));
 		}
 
 		/**
