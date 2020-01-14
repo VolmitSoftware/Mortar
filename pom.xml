@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.volmit</groupId>
 	<artifactId>Mortar</artifactId>
-	<version>1.0.74</version>
+	<version>1.0.75</version>
 	<name>Mortar</name>
 	<description>That crap between the bricks</description>
 	<developers>
@@ -350,7 +350,7 @@
 	<distributionManagement>
 		<repository>
 			<id>volmit</id>
-			<url>http://nexus.volmit.com/content/repositories/volmit</url>
+			<url>http://nexus.volmit.com:8080/repository/volmit/</url>
 		</repository>
 	</distributionManagement>
 </project>

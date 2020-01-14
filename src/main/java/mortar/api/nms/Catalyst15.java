@@ -215,13 +215,13 @@ public class Catalyst15 extends CatalystPacketListener implements CatalystHost
 	@Override
 	public String getServerVersion()
 	{
-		return "1_14_R1";
+		return "1_15_R1";
 	}
 
 	@Override
 	public String getVersion()
 	{
-		return "1.14.X";
+		return "1.15.X";
 	}
 
 	@Override
