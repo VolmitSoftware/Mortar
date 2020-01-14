@@ -7,21 +7,20 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
-import mortar.bukkit.compatibility.MaterialEnum;
+import net.minecraft.server.v1_15_R1.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.World.Environment;
-import org.bukkit.craftbukkit.v1_9_R1.CraftChunk;
-import org.bukkit.craftbukkit.v1_9_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_9_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_9_R1.inventory.CraftItemStack;
-import org.bukkit.craftbukkit.v1_9_R1.inventory.CraftMetaBook;
+import org.bukkit.craftbukkit.v1_15_R1.CraftChunk;
+import org.bukkit.craftbukkit.v1_15_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftMetaBook;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -31,160 +30,29 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 import org.bukkit.util.Vector;
 
-import mortar.api.particle.ParticleEffect;
-import mortar.api.particle.ParticleEffect.ParticleColor;
 import mortar.api.sched.J;
+import mortar.api.world.Area;
 import mortar.api.world.MaterialBlock;
-import mortar.bukkit.plugin.Mortar;
 import mortar.bukkit.plugin.MortarAPIPlugin;
-import mortar.lang.collection.FinalBoolean;
 import mortar.lang.collection.GList;
 import mortar.lang.collection.GSet;
 import mortar.util.reflection.V;
 import mortar.util.text.C;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
-import net.minecraft.server.v1_9_R1.Block;
-import net.minecraft.server.v1_9_R1.BlockPosition;
-import net.minecraft.server.v1_9_R1.ChunkSection;
-import net.minecraft.server.v1_9_R1.DataWatcher.Item;
-import net.minecraft.server.v1_9_R1.DataWatcherObject;
-import net.minecraft.server.v1_9_R1.DataWatcherRegistry;
-import net.minecraft.server.v1_9_R1.EntityHuman.EnumChatVisibility;
-import net.minecraft.server.v1_9_R1.EnumMainHand;
-import net.minecraft.server.v1_9_R1.IBlockData;
-import net.minecraft.server.v1_9_R1.IChatBaseComponent;
-import net.minecraft.server.v1_9_R1.IScoreboardCriteria.EnumScoreboardHealthDisplay;
-import net.minecraft.server.v1_9_R1.NextTickListEntry;
-import net.minecraft.server.v1_9_R1.Packet;
-import net.minecraft.server.v1_9_R1.PacketPlayInEntityAction;
-import net.minecraft.server.v1_9_R1.PacketPlayInFlying;
-import net.minecraft.server.v1_9_R1.PacketPlayInSettings;
-import net.minecraft.server.v1_9_R1.PacketPlayOutAnimation;
-import net.minecraft.server.v1_9_R1.PacketPlayOutBlockAction;
-import net.minecraft.server.v1_9_R1.PacketPlayOutBlockBreakAnimation;
-import net.minecraft.server.v1_9_R1.PacketPlayOutBlockChange;
-import net.minecraft.server.v1_9_R1.PacketPlayOutChat;
-import net.minecraft.server.v1_9_R1.PacketPlayOutEntity;
-import net.minecraft.server.v1_9_R1.PacketPlayOutEntity.PacketPlayOutRelEntityMove;
-import net.minecraft.server.v1_9_R1.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_9_R1.PacketPlayOutEntityMetadata;
-import net.minecraft.server.v1_9_R1.PacketPlayOutEntityTeleport;
-import net.minecraft.server.v1_9_R1.PacketPlayOutGameStateChange;
-import net.minecraft.server.v1_9_R1.PacketPlayOutHeldItemSlot;
-import net.minecraft.server.v1_9_R1.PacketPlayOutMapChunk;
-import net.minecraft.server.v1_9_R1.PacketPlayOutMount;
-import net.minecraft.server.v1_9_R1.PacketPlayOutPlayerListHeaderFooter;
-import net.minecraft.server.v1_9_R1.PacketPlayOutScoreboardObjective;
-import net.minecraft.server.v1_9_R1.PacketPlayOutScoreboardScore;
-import net.minecraft.server.v1_9_R1.PacketPlayOutScoreboardScore.EnumScoreboardAction;
-import net.minecraft.server.v1_9_R1.PacketPlayOutScoreboardTeam;
-import net.minecraft.server.v1_9_R1.PacketPlayOutSetSlot;
-import net.minecraft.server.v1_9_R1.PacketPlayOutSpawnEntity;
-import net.minecraft.server.v1_9_R1.PacketPlayOutTitle;
-import net.minecraft.server.v1_9_R1.PacketPlayOutTitle.EnumTitleAction;
-import net.minecraft.server.v1_9_R1.PacketPlayOutUnloadChunk;
-import net.minecraft.server.v1_9_R1.PacketPlayOutUpdateTime;
-import net.minecraft.server.v1_9_R1.WorldServer;
+import net.minecraft.server.v1_15_R1.DataWatcher.Item;
+import net.minecraft.server.v1_15_R1.IScoreboardCriteria.EnumScoreboardHealthDisplay;
+import net.minecraft.server.v1_15_R1.PacketPlayOutEntity.PacketPlayOutRelEntityMove;
+import net.minecraft.server.v1_15_R1.PacketPlayOutTitle.EnumTitleAction;
 
-public class Catalyst92 extends CatalystPacketListener implements CatalystHost
+public class Catalyst15 extends CatalystPacketListener implements CatalystHost
 {
 	private Map<Player, PlayerSettings> playerSettings = new HashMap<>();
 
 	@Override
-	@SuppressWarnings("deprecation")
-	public void setBlock(Location l, MaterialBlock m)
-	{
-		int x = l.getBlockX();
-		int y = l.getBlockY();
-		int z = l.getBlockZ();
-		net.minecraft.server.v1_9_R1.World w = ((CraftWorld) l.getWorld()).getHandle();
-		net.minecraft.server.v1_9_R1.Chunk chunk = w.getChunkAt(x >> 4, z >> 4);
-		int combined = m.getMaterial().getId() + (m.getData() << 12);
-		IBlockData ibd = net.minecraft.server.v1_9_R1.Block.getByCombinedId(combined);
-
-		if(chunk.getSections()[y >> 4] == null)
-		{
-			chunk.getSections()[y >> 4] = new net.minecraft.server.v1_9_R1.ChunkSection(y >> 4 << 4, chunk.world.worldProvider.m());
-		}
-
-		net.minecraft.server.v1_9_R1.ChunkSection sec = chunk.getSections()[y >> 4];
-		sec.setType(x & 15, y & 15, z & 15, ibd);
-	}
-
-	@Override
-	public MaterialBlock getBlock(Location l)
-	{
-		return getBlock(l.getWorld(), l.getBlockX(), l.getBlockY(), l.getBlockZ());
-	}
-
-	@Override
-	public MaterialBlock getBlock(World world, int xx, int yy, int zz)
-	{
-		int x = xx >> 4;
-		int y = yy >> 4;
-		int z = zz >> 4;
-		FinalBoolean lx = new FinalBoolean(false);
-		if(!world.isChunkLoaded(x, z))
-		{
-			if(Mortar.isMainThread())
-			{
-				world.loadChunk(x, z);
-			}
-
-			else
-			{
-				int m = J.sr(() -> world.loadChunk(x, z), 20);
-
-				while(!lx.get())
-				{
-					try
-					{
-						Thread.sleep(1);
-					}
-
-					catch(InterruptedException e)
-					{
-						e.printStackTrace();
-					}
-				}
-
-				J.csr(m);
-			}
-		}
-
-		net.minecraft.server.v1_9_R1.Chunk c = ((CraftChunk) world.getChunkAt(x, z)).getHandle();
-		ChunkSection s = c.getSections()[y];
-
-		if(s == null)
-		{
-			return new MaterialBlock(MaterialEnum.AIR.bukkitMaterial());
-		}
-
-		IBlockData data = s.getType(xx & 15, yy & 15, zz & 15);
-		return new MaterialBlock(Block.getId(data.getBlock()), (byte) data.getBlock().toLegacyData(data) << 12);
-	}
-
-	@Override
-	public void relight(Chunk c)
-	{
-		((CraftChunk) c).getHandle().initLighting();
-	}
-
-	@Override
-	public Object packetTime(long full, long day)
-	{
-		PacketPlayOutUpdateTime t = new PacketPlayOutUpdateTime();
-		new V(t).set("a", full);
-		new V(t).set("b", day);
-
-		return t;
-	}
-
-	@Override
 	public void sendAdvancement(Player p, FrameType type, ItemStack is, String text)
 	{
-		AdvancementHolder92 a = new AdvancementHolder92(UUID.randomUUID().toString(), MortarAPIPlugin.p);
+		AdvancementHolder15 a = new AdvancementHolder15(UUID.randomUUID().toString(), MortarAPIPlugin.p);
 		a.withToast(true);
 		a.withDescription("?");
 		a.withFrame(type);
@@ -198,7 +66,55 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 		J.s(() -> a.delete(p), 5);
 	}
 
-	// START PACKETS
+	@Override
+	public MaterialBlock getBlock(Location l)
+	{
+		return null;
+	}
+
+	@Override
+	public MaterialBlock getBlock(World w, int x, int y, int z)
+	{
+		return null;
+	}
+
+	@Override
+	public void relight(Chunk c)
+	{
+		// TODO find new way to relight
+	}
+
+	@Override
+	public Object packetTime(long full, long day)
+	{
+		PacketPlayOutUpdateTime t = new PacketPlayOutUpdateTime();
+		new V(t).set("a", full);
+		new V(t).set("b", day);
+
+		return t;
+	}
+
+	@Override
+	@SuppressWarnings("deprecation")
+	public void setBlock(Location l, MaterialBlock m)
+	{
+		int x = l.getBlockX();
+		int y = l.getBlockY();
+		int z = l.getBlockZ();
+		net.minecraft.server.v1_15_R1.World w = ((CraftWorld) l.getWorld()).getHandle();
+		net.minecraft.server.v1_15_R1.Chunk chunk = w.getChunkAt(x >> 4, z >> 4);
+		int combined = m.getMaterial().getId() + (m.getData() << 12);
+		IBlockData ibd = net.minecraft.server.v1_15_R1.Block.getByCombinedId(combined);
+
+		if(chunk.getSections()[y >> 4] == null)
+		{
+			chunk.getSections()[y >> 4] = new net.minecraft.server.v1_15_R1.ChunkSection(y >> 4 << 4);
+		}
+
+		net.minecraft.server.v1_15_R1.ChunkSection sec = chunk.getSections()[y >> 4];
+		sec.setType(x & 15, y & 15, z & 15, ibd);
+	}
+
 	@Override
 	public Object packetChunkUnload(int x, int z)
 	{
@@ -208,7 +124,7 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 	@Override
 	public Object packetChunkFullSend(Chunk chunk)
 	{
-		return new PacketPlayOutMapChunk(((CraftChunk) chunk).getHandle(), chunk.getWorld().getEnvironment().equals(Environment.NORMAL), 65535);
+		return new PacketPlayOutMapChunk(((CraftChunk) chunk).getHandle(), 65535);
 	}
 
 	@Override
@@ -228,7 +144,7 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 		new V(p).set("a", toBlockPos(block));
 		new V(p).set("b", action);
 		new V(p).set("c", param);
-		new V(p).set("d", Block.getById(blocktype));
+		new V(p).set("d", Block.getByCombinedId(blocktype).getBlock());
 
 		return p;
 	}
@@ -270,7 +186,7 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 	@Override
 	public Object packetActionBarMessage(String subtitle)
 	{
-		return new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + subtitle + "\"}"), (byte) 2);
+		return new PacketPlayOutTitle(EnumTitleAction.ACTIONBAR, IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + subtitle + "\"}"));
 	}
 
 	@Override
@@ -290,7 +206,6 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 	{
 		return new PacketPlayOutTitle(in, stay, out);
 	}
-	// END PACKETS
 
 	private BlockPosition toBlockPos(Location location)
 	{
@@ -300,13 +215,13 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 	@Override
 	public String getServerVersion()
 	{
-		return "1_12_R1";
+		return "1_14_R1";
 	}
 
 	@Override
 	public String getVersion()
 	{
-		return "1.12.X";
+		return "1.14.X";
 	}
 
 	@Override
@@ -334,7 +249,7 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 				if(packet instanceof PacketPlayInSettings)
 				{
 					PacketPlayInSettings s = (PacketPlayInSettings) packet;
-					playerSettings.put(player, new PlayerSettings(new V(s).get("a"), new V(s).get("b"), ChatMode.values()[((EnumChatVisibility) new V(s).get("c")).ordinal()], new V(s).get("d"), new V(s).get("e"), ((EnumMainHand) new V(s).get("f")).equals(EnumMainHand.RIGHT)));
+					playerSettings.put(player, new PlayerSettings(new V(s).get("a"), new V(s).get("viewDistance"), ChatMode.values()[((EnumChatVisibility) new V(s).get("c")).ordinal()], new V(s).get("d"), new V(s).get("e"), ((EnumMainHand) new V(s).get("f")).equals(EnumMainHand.RIGHT)));
 				}
 
 				return packet;
@@ -457,7 +372,7 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 	@Override
 	public ShadowChunk shadowCopy(Chunk at)
 	{
-		return new ShadowChunk92(at);
+		return null;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -466,14 +381,39 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 	{
 		try
 		{
-			Field f = WorldServer.class.getDeclaredField("nextTickList");
+			Field f = WorldServer.class.getDeclaredField("nextTickListBlock");
+			Field ff = TickListServer.class.getDeclaredField("nextTickList");
 			f.setAccessible(true);
-			return (Set<Object>) f.get(((CraftWorld) world).getHandle());
+			ff.setAccessible(true);
+			TickListServer<?> l = (TickListServer<?>) f.get(((CraftWorld) world).getHandle());
+			return (Set<Object>) ff.get(l);
 		}
 
-		catch(Throwable ee)
+		catch(Throwable e)
 		{
+			e.printStackTrace();
+		}
 
+		return new GSet<>();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Set<Object> getTickListFluid(World world)
+	{
+		try
+		{
+			Field f = WorldServer.class.getDeclaredField("nextTickListFluid");
+			Field ff = TickListServer.class.getDeclaredField("nextTickList");
+			f.setAccessible(true);
+			ff.setAccessible(true);
+			TickListServer<?> l = (TickListServer<?>) f.get(((CraftWorld) world).getHandle());
+			return (Set<Object>) ff.get(l);
+		}
+
+		catch(Throwable e)
+		{
+			e.printStackTrace();
 		}
 
 		return new GSet<>();
@@ -482,22 +422,16 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 	@Override
 	public org.bukkit.block.Block getBlock(World world, Object tickListEntry)
 	{
-		BlockPosition pos = ((NextTickListEntry) tickListEntry).a;
+		BlockPosition pos = ((NextTickListEntry<?>) tickListEntry).a;
 		return world.getBlockAt(pos.getX(), pos.getY(), pos.getZ());
-	}
-
-	@Override
-	public Set<Object> getTickListFluid(World world)
-	{
-		return new GSet<>();
 	}
 
 	@Override
 	public Object packetTabHeaderFooter(String h, String f)
 	{
 		PacketPlayOutPlayerListHeaderFooter p = new PacketPlayOutPlayerListHeaderFooter();
-		new V(p).set("a", IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + h + "\"}"));
-		new V(p).set("b", IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + f + "\"}"));
+		new V(p).set("header", IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + h + "\"}"));
+		new V(p).set("footer", IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + f + "\"}"));
 
 		return p;
 	}
@@ -511,7 +445,7 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 	@Override
 	public int getAction(Object packetIn)
 	{
-		return ((PacketPlayInEntityAction) packetIn).b().ordinal();
+		return ((PacketPlayInEntityAction) packetIn).c().ordinal();
 	}
 
 	@Override
@@ -596,9 +530,9 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 			g.setAccessible(true);
 			h.setAccessible(true);
 			a.set(r, eid);
-			b.set(r, (int) (x * 4096));
-			c.set(r, (int) (y * 4096));
-			d.set(r, (int) (z * 4096));
+			b.set(r, (short) (x * 4096));
+			c.set(r, (short) (y * 4096));
+			d.set(r, (short) (z * 4096));
 			e.set(r, (byte) 0);
 			f.set(r, (byte) 0);
 			g.set(r, onGround);
@@ -655,9 +589,14 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 		new V(m).set("h", 0);
 		new V(m).set("i", 0);
 		new V(m).set("j", 0);
-		new V(m).set("k", 78);
+		new V(m).set("k", EntityTypes.ARMOR_STAND);
 		new V(m).set("l", 0);
 		sendPacket(player, m);
+	}
+
+	private IChatBaseComponent s(String s)
+	{
+		return IChatBaseComponent.ChatSerializer.a("{\"text\": \"" + s + "\"}");
 	}
 
 	@Override
@@ -665,14 +604,14 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 	{
 		PacketPlayOutScoreboardTeam k = new PacketPlayOutScoreboardTeam();
 		new V(k).set("a", id);
-		new V(k).set("b", name);
+		new V(k).set("b", s(name));
 		new V(k).set("i", mode); // 0 = new, 1 = remove, 2 = update, 3 = addplayer, 4 = removeplayer
-		new V(k).set("c", prefix);
-		new V(k).set("d", suffix);
+		new V(k).set("c", s(prefix));
+		new V(k).set("d", s(suffix));
 		new V(k).set("j", 0);
 		new V(k).set("f", "never");
 		new V(k).set("e", "always");
-		new V(k).set("g", color.getMeta());
+		new V(k).set("g", EnumChatFormat.valueOf(color.name().replaceAll("MAGIC", "OBFUSCATED")));
 		sendPacket(p, k);
 	}
 
@@ -719,7 +658,7 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 	@Override
 	public void displayScoreboard(Player p, int slot, String id)
 	{
-		PacketPlayOutScoreboardObjective k = new PacketPlayOutScoreboardObjective();
+		PacketPlayOutScoreboardDisplayObjective k = new PacketPlayOutScoreboardDisplayObjective();
 		new V(k).set("a", slot);
 		new V(k).set("b", id);
 		sendPacket(p, k);
@@ -737,7 +676,7 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 		PacketPlayOutScoreboardObjective k = new PacketPlayOutScoreboardObjective();
 		new V(k).set("d", 0);
 		new V(k).set("a", id);
-		new V(k).set("b", name);
+		new V(k).set("b", s(name));
 		new V(k).set("c", EnumScoreboardHealthDisplay.INTEGER);
 		sendPacket(p, k);
 	}
@@ -748,7 +687,7 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 		PacketPlayOutScoreboardObjective k = new PacketPlayOutScoreboardObjective();
 		new V(k).set("d", 1);
 		new V(k).set("a", id);
-		new V(k).set("b", "memes");
+		new V(k).set("b", s("memes"));
 		new V(k).set("c", EnumScoreboardHealthDisplay.INTEGER);
 		sendPacket(p, k);
 	}
@@ -759,7 +698,7 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 		PacketPlayOutScoreboardObjective k = new PacketPlayOutScoreboardObjective();
 		new V(k).set("d", 2);
 		new V(k).set("a", id);
-		new V(k).set("b", name);
+		new V(k).set("b", s(name));
 		new V(k).set("c", EnumScoreboardHealthDisplay.INTEGER);
 		sendPacket(p, k);
 	}
@@ -771,7 +710,7 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 		new V(k).set("a", name);
 		new V(k).set("b", objective);
 		new V(k).set("c", score);
-		new V(k).set("d", EnumScoreboardAction.CHANGE);
+		new V(k).set("d", ScoreboardServer.Action.CHANGE);
 		sendPacket(p, k);
 	}
 
@@ -782,7 +721,7 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 		new V(k).set("a", name);
 		new V(k).set("b", objective);
 		new V(k).set("c", 0);
-		new V(k).set("d", EnumScoreboardAction.REMOVE);
+		new V(k).set("d", ScoreboardServer.Action.REMOVE);
 		sendPacket(p, k);
 	}
 
@@ -908,7 +847,8 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 	@Override
 	public Object getMetaEntityCustomName(String name)
 	{
-		return new Item<String>(new DataWatcherObject<>(2, DataWatcherRegistry.d), name);
+		Optional<IChatBaseComponent> c = Optional.ofNullable(s(name));
+		return new Item<Optional<IChatBaseComponent>>(new DataWatcherObject<>(2, DataWatcherRegistry.f), c);
 	}
 
 	@Override
@@ -929,19 +869,19 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 	@Override
 	public Object getMetaEntityGravity(boolean gravity)
 	{
-		return new Item<Boolean>(new DataWatcherObject<>(5, DataWatcherRegistry.h), gravity);
+		return new Item<Boolean>(new DataWatcherObject<>(5, DataWatcherRegistry.i), gravity);
 	}
 
 	@Override
 	public Object getMetaEntitySilenced(boolean silenced)
 	{
-		return new Item<Boolean>(new DataWatcherObject<>(4, DataWatcherRegistry.h), silenced);
+		return new Item<Boolean>(new DataWatcherObject<>(4, DataWatcherRegistry.i), silenced);
 	}
 
 	@Override
 	public Object getMetaEntityCustomNameVisible(boolean visible)
 	{
-		return new Item<Boolean>(new DataWatcherObject<>(3, DataWatcherRegistry.h), visible);
+		return new Item<Boolean>(new DataWatcherObject<>(3, DataWatcherRegistry.i), visible);
 	}
 
 	@Override
@@ -953,7 +893,7 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 		bits += noBasePlate ? 8 : 0;
 		bits += marker ? 10 : 0;
 
-		return new Item<Byte>(new DataWatcherObject<>(11, DataWatcherRegistry.a), bits);
+		return new Item<Byte>(new DataWatcherObject<>(13, DataWatcherRegistry.a), bits);
 	}
 
 	@Override
@@ -973,15 +913,45 @@ public class Catalyst92 extends CatalystPacketListener implements CatalystHost
 	@Override
 	public void redstoneParticle(Player p, Color c, Location l, float size)
 	{
-		ParticleColor cx = new ParticleEffect.OrdinaryColor(c.getRed(), c.getGreen(), c.getBlue());
-		ParticleEffect.REDSTONE.display(cx, l, p);
+		ParticleParam pp = new ParticleParamRedstone(c.getRed() / 255f, c.getGreen() / 255f, c.getBlue() / 255f, size);
+		PacketPlayOutWorldParticles px = new PacketPlayOutWorldParticles();
+		PacketBuffer b = new PacketBuffer();
+		new V(px).set("a", (float) l.getX());
+		new V(px).set("b", (float) l.getY());
+		new V(px).set("c", (float) l.getZ());
+		new V(px).set("d", 0f);
+		new V(px).set("e", 0f);
+		new V(px).set("f", 0f);
+		new V(px).set("g", 0f);
+		new V(px).set("h", 1);
+		new V(px).set("i", p.getLocation().distanceSquared(l) > 64 * 64);
+		new V(px).set("j", pp);
+		b.q(px).flush(p);
 	}
 
 	@Override
 	public void redstoneParticle(double range, Color c, Location l, float size)
 	{
-		ParticleColor cx = new ParticleEffect.OrdinaryColor(c.getRed(), c.getGreen(), c.getBlue());
-		ParticleEffect.REDSTONE.display(cx, l, range);
+		ParticleParam pp = new ParticleParamRedstone(c.getRed(), c.getGreen(), c.getBlue(), size);
+		PacketPlayOutWorldParticles px = new PacketPlayOutWorldParticles();
+		PacketBuffer b = new PacketBuffer();
+		new V(px).set("a", (float) l.getX());
+		new V(px).set("b", (float) l.getY());
+		new V(px).set("c", (float) l.getZ());
+		new V(px).set("d", 0f);
+		new V(px).set("e", 0f);
+		new V(px).set("f", 0f);
+		new V(px).set("g", 0f);
+		new V(px).set("h", 1);
+		new V(px).set("i", range > 64);
+		new V(px).set("j", pp);
+		Area a = new Area(l, range);
+		b.q(px);
+
+		for(Player i : a.getNearbyPlayers())
+		{
+			b.flush(i);
+		}
 	}
 
 	@Override

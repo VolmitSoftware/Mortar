@@ -30,9 +30,6 @@ public class Catalyst
 			case R1_8:
 				D.as("NMP").v("Selected Catalyst:8");
 				return new Catalyst8();
-			case R1_9_2:
-				D.as("NMP").v("Selected Catalyst:92");
-				return new Catalyst92();
 			case R1_9_4:
 				D.as("NMP").v("Selected Catalyst:94");
 				return new Catalyst94();

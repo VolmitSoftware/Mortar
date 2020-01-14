@@ -16,8 +16,6 @@ import com.google.common.cache.LoadingCache;
 public enum Version
 {
 	ONE_EIGHT_R3("1_8_R3", Wrapper1_8_R3.class),
-	ONE_NINE_R1("1_9_R1", Wrapper1_9_R1.class),
-	ONE_NINE_R2("1_9_R2", Wrapper1_9_R2.class),
 	ONE_TEN_R1("1_10_R1", Wrapper1_10_R1.class),
 	ONE_ELEVEN_R1("1_11_R1", Wrapper1_11_R1.class),
 	ONE_TWELVE_R1("1_12_R1", Wrapper1_12_R1.class);

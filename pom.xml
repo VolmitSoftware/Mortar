@@ -177,6 +177,10 @@
 			<url>https://raw.githubusercontent.com/cyberpwnn/Central/master/</url>
 		</repository>
 		<repository>
+			<id>volmit</id>
+			<url>http://nexus.volmit.com:8080/repository/volmit/</url>
+		</repository>
+		<repository>
 			<id>dmulloy2-repo</id>
 			<url>http://repo.dmulloy2.net/nexus/repository/public/</url>
 		</repository>
@@ -193,81 +197,59 @@
 	<dependencies>
 		<!-- Spigot API -->
 		<dependency>
+			<groupId>org.spigot</groupId>
 			<artifactId>spigot</artifactId>
-			<groupId>cb</groupId>
-			<version>1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/spigot-1.12.2.jar</systemPath>
+			<version>1.12.2</version>
+			<scope>provided</scope>
 		</dependency>
 		<!-- Craftbukkit Versions -->
 		<dependency>
-			<artifactId>craftbukkit-1.14.2</artifactId>
-			<groupId>cb</groupId>
-			<version>1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/craftbukkit-1.14.2.jar</systemPath>
-		</dependency>
-		<dependency>
-			<artifactId>craftbukkit-1.13</artifactId>
-			<groupId>cb</groupId>
-			<version>1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/craftbukkit-1.13.jar</systemPath>
-		</dependency>
-		<dependency>
-			<artifactId>craftbukkit-1.13.2</artifactId>
-			<groupId>cb</groupId>
-			<version>1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/craftbukkit-1.13.2.jar</systemPath>
-		</dependency>
-		<dependency>
-			<artifactId>craftbukkit-1.12.2</artifactId>
-			<groupId>cb</groupId>
-			<version>1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/craftbukkit-1.12.2.jar</systemPath>
-		</dependency>
-		<dependency>
-			<groupId>net.md-5</groupId>
-			<artifactId>bungeecord-api</artifactId>
-			<version>1.12-SNAPSHOT</version>
+			<groupId>org.craftbukkit</groupId>
+			<artifactId>craftbukkit15</artifactId>
+			<version>15</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<artifactId>craftbukkit-1.11.2</artifactId>
-			<groupId>cb</groupId>
-			<version>1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/craftbukkit-1.11.2.jar</systemPath>
+			<groupId>org.craftbukkit</groupId>
+			<artifactId>craftbukkit14</artifactId>
+			<version>14</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<artifactId>craftbukkit-1.10.2</artifactId>
-			<groupId>cb</groupId>
-			<version>1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/craftbukkit-1.10.2.jar</systemPath>
+			<groupId>org.craftbukkit</groupId>
+			<artifactId>craftbukkit13</artifactId>
+			<version>13</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<artifactId>craftbukkit-1.9.4</artifactId>
-			<groupId>cb</groupId>
-			<version>1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/craftbukkit-1.9.4.jar</systemPath>
+			<groupId>org.craftbukkit</groupId>
+			<artifactId>craftbukkit12</artifactId>
+			<version>12</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<artifactId>craftbukkit-1.9.2</artifactId>
-			<groupId>cb</groupId>
-			<version>1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/craftbukkit-1.9.2.jar</systemPath>
+			<groupId>org.craftbukkit</groupId>
+			<artifactId>craftbukkit11</artifactId>
+			<version>11</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<artifactId>craftbukkit-1.8.8</artifactId>
-			<groupId>cb</groupId>
-			<version>1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/craftbukkit-1.8.8.jar</systemPath>
+			<groupId>org.craftbukkit</groupId>
+			<artifactId>craftbukkit10</artifactId>
+			<version>10</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.craftbukkit</groupId>
+			<artifactId>craftbukkit19</artifactId>
+			<version>19</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.craftbukkit</groupId>
+			<artifactId>craftbukkit18</artifactId>
+			<version>18</version>
+			<scope>provided</scope>
 		</dependency>
 		<!-- Plugin Hooks -->
 		<dependency>
