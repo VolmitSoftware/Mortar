@@ -169,10 +169,6 @@
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
     </repository>
     <repository>
-      <id>pub</id>
-      <url>http://nexus.mpm.com/content/repositories/pub</url>
-    </repository>
-    <repository>
       <id>fawe</id>
       <url>http://ci.athion.net/job/FastAsyncWorldEdit/ws/mvn/</url>
     </repository>
@@ -181,8 +177,8 @@
       <url>https://raw.githubusercontent.com/cyberpwnn/Central/master/</url>
     </repository>
     <repository>
-      <id>volmit</id>
-      <url>http://nexus.volmit.com:8080/repository/volmit/</url>
+      <id>bcn</id>
+      <url>http://bytecode.ninja/repository/bcn/</url>
     </repository>
     <repository>
       <id>dmulloy2-repo</id>
@@ -200,57 +196,57 @@
   </repositories>
   <dependencies>
     <dependency>
-      <groupId>org.spigot</groupId>
-      <artifactId>spigot</artifactId>
+      <groupId>org.spigotmc</groupId>
+      <artifactId>spigot-full</artifactId>
       <version>1.12.2</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.craftbukkit</groupId>
-      <artifactId>craftbukkit15</artifactId>
-      <version>15</version>
+      <groupId>org.bukkit.craftbukkit</groupId>
+      <artifactId>cb-1.15.1</artifactId>
+      <version>1.15.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.craftbukkit</groupId>
-      <artifactId>craftbukkit14</artifactId>
-      <version>14</version>
+      <groupId>org.bukkit.craftbukkit</groupId>
+      <artifactId>cb-1.14.4</artifactId>
+      <version>1.14.4</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.craftbukkit</groupId>
-      <artifactId>craftbukkit13</artifactId>
-      <version>13</version>
+      <groupId>org.bukkit.craftbukkit</groupId>
+      <artifactId>cb-1.13.2</artifactId>
+      <version>1.13.2</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.craftbukkit</groupId>
-      <artifactId>craftbukkit12</artifactId>
-      <version>12</version>
+      <groupId>org.bukkit.craftbukkit</groupId>
+      <artifactId>cb-1.12.2</artifactId>
+      <version>1.12.2</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.craftbukkit</groupId>
-      <artifactId>craftbukkit11</artifactId>
-      <version>11</version>
+      <groupId>org.bukkit.craftbukkit</groupId>
+      <artifactId>cb-1.11.2</artifactId>
+      <version>1.11.2</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.craftbukkit</groupId>
-      <artifactId>craftbukkit10</artifactId>
-      <version>10</version>
+      <groupId>org.bukkit.craftbukkit</groupId>
+      <artifactId>cb-1.10.2</artifactId>
+      <version>1.10.2</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.craftbukkit</groupId>
-      <artifactId>craftbukkit19</artifactId>
-      <version>19</version>
+      <groupId>org.bukkit.craftbukkit</groupId>
+      <artifactId>cb-1.9.4</artifactId>
+      <version>1.9.4</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.craftbukkit</groupId>
-      <artifactId>craftbukkit18</artifactId>
-      <version>18</version>
+      <groupId>org.bukkit.craftbukkit</groupId>
+      <artifactId>cb-1.8.8</artifactId>
+      <version>1.8.8</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -304,8 +300,8 @@
   </dependencies>
   <distributionManagement>
     <repository>
-      <id>volmit</id>
-      <url>http://nexus.volmit.com:8080/repository/volmit/</url>
+      <id>bcn</id>
+      <url>http://bytecode.ninja/repository/bcn/</url>
     </repository>
   </distributionManagement>
   <properties>
