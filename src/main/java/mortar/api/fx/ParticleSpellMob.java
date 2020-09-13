@@ -12,9 +12,9 @@ public class ParticleSpellMob extends ParticleBase implements ColoredEffect
 {
 	private Color color;
 
-	public ParticleSpellMob()
+	public ParticleSpellMob(Color color)
 	{
-		this.color = Color.WHITE;
+		this.color = color;
 	}
 
 	@Override

@@ -21,7 +21,7 @@ public class EffectCauldronAcceptItem implements Effect
 	{
 		audio = new Audio().c(SoundCategory.AMBIENT).vp(1f, 0.1f).setSound(SoundEnum.BLOCK_BREWING_STAND_BREW.bukkitSound());
 		audio.addChild(((Audio) audio).clone().p(1.5f));
-		effect = new ParticleSpellMob().setColor(Color.MAGENTA);
+		effect = new ParticleSpellMob(Color.MAGENTA);
 	}
 
 	@Override

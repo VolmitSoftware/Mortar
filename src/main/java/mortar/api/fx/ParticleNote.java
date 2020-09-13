@@ -12,9 +12,9 @@ public class ParticleNote extends ParticleBase implements ColoredEffect
 {
 	private Color color;
 
-	public ParticleNote()
+	public ParticleNote(Color color)
 	{
-		this.color = Color.WHITE;
+		this.color = color;
 	}
 
 	@Override

@@ -10,24 +10,23 @@ import mortar.api.nms.NMP;
 public class ParticleRedstone extends ParticleBase implements ColoredEffect
 {
 	private Color color;
-	private float size;
+	private float size = 1f;
 
-	public ParticleRedstone()
+	public ParticleRedstone(Color color)
 	{
-		this.color = Color.WHITE;
-		size = 1f;
+		this.color = color;
 	}
 
 	@Override
 	public void play(Location l, double range)
 	{
-		NMP.host.redstoneParticle(range, getColor(), l, 1f);
+		NMP.host.redstoneParticle(range, getColor(), l, size);
 	}
 
 	@Override
 	public void play(Location l, Player p)
 	{
-		NMP.host.redstoneParticle(p, getColor(), l, 1f);
+		NMP.host.redstoneParticle(p, getColor(), l, size);
 	}
 
 	@Override

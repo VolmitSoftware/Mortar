@@ -22,7 +22,7 @@ public class EffectCauldronAcceptRecipe implements Effect
 	{
 		audio = new Audio().c(SoundCategory.AMBIENT).vp(1f, 1.9f).setSound(SoundEnum.BLOCK_BREWING_STAND_BREW.bukkitSound());
 		audio.addChild(((Audio) audio).clone().p(1.4f).s(SoundEnum.BLOCK_END_PORTAL_FRAME_FILL.bukkitSound()).d(5));
-		effect = new ParticleSpellMob().setColor(Color.BLUE);
+		effect = new ParticleSpellMob(Color.BLUE);
 	}
 
 	@Override
