@@ -1,138 +1,91 @@
 package mortar.api.nms;
 
+import org.bukkit.Bukkit;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public enum NMSVersion
-{
-	R1_15,
-	R1_14,
-	R1_13,
-	R1_12,
-	R1_11,
-	R1_10,
-	R1_9_4,
-	R1_9_2,
-	R1_8;
+public enum NMSVersion {
+    v1_16_R2(Catalyst16.class),
+    v1_15_R1(Catalyst15.class),
+    v1_14_R1(Catalyst14.class),
+    v1_13_R2(Catalyst13.class),
+    v1_12_R1(Catalyst12.class),
+    v1_11_R1(Catalyst11.class),
+    v1_10_R1(Catalyst10.class),
+    v1_9_R2(Catalyst9.class),
+    v1_8_R3(Catalyst8.class);
 
-	public List<NMSVersion> getAboveInclusive()
-	{
-		List<NMSVersion> n = new ArrayList<NMSVersion>();
+    private static NMSVersion current;
+    private final Class<? extends CatalystHost> hostClazz;
 
-		for(NMSVersion i : values())
-		{
-			if(i.ordinal() >= ordinal())
-			{
-				n.add(i);
-			}
-		}
+    NMSVersion(Class<? extends CatalystHost> hostClazz) {
+        this.hostClazz = hostClazz;
+    }
 
-		return n;
-	}
+    static {
+        String name = Bukkit.getServer().getClass().getPackage().getName();
+        String version = name.substring(name.lastIndexOf('.') + 1);
+        try {
+            current = valueOf(version);
+        } catch (Throwable ignored) {
+        }
+    }
 
-	public List<NMSVersion> betweenInclusive(NMSVersion other)
-	{
-		List<NMSVersion> n = new ArrayList<NMSVersion>();
+    public CatalystHost createHost() {
+        try {
+            return hostClazz.newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-		for(NMSVersion i : values())
-		{
-			if(i.ordinal() <= Math.max(other.ordinal(), ordinal()) && i.ordinal() >= Math.min(ordinal(), other.ordinal()))
-			{
-				n.add(i);
-			}
-		}
+    public List<NMSVersion> getAboveInclusive() {
+        List<NMSVersion> n = new ArrayList<>();
 
-		return n;
-	}
+        for (NMSVersion i : values()) {
+            if (i.ordinal() >= ordinal()) {
+                n.add(i);
+            }
+        }
 
-	public List<NMSVersion> getBelowInclusive()
-	{
-		List<NMSVersion> n = new ArrayList<NMSVersion>();
+        return n;
+    }
 
-		for(NMSVersion i : values())
-		{
-			if(i.ordinal() <= ordinal())
-			{
-				n.add(i);
-			}
-		}
+    public List<NMSVersion> betweenInclusive(NMSVersion other) {
+        List<NMSVersion> n = new ArrayList<>();
 
-		return n;
-	}
+        for (NMSVersion i : values()) {
+            if (i.ordinal() <= Math.max(other.ordinal(), ordinal()) && i.ordinal() >= Math.min(ordinal(), other.ordinal())) {
+                n.add(i);
+            }
+        }
 
-	public static NMSVersion getMinimum()
-	{
-		return values()[values().length - 1];
-	}
+        return n;
+    }
 
-	public static NMSVersion getMaximum()
-	{
-		return values()[0];
-	}
+    public List<NMSVersion> getBelowInclusive() {
+        List<NMSVersion> n = new ArrayList<>();
 
-	public static NMSVersion current()
-	{
-		if(tryVersion("1_8_R3"))
-		{
-			return R1_8;
-		}
+        for (NMSVersion i : values()) {
+            if (i.ordinal() <= ordinal()) {
+                n.add(i);
+            }
+        }
 
-		if(tryVersion("1_9_R1"))
-		{
-			return R1_9_2;
-		}
+        return n;
+    }
 
-		if(tryVersion("1_9_R2"))
-		{
-			return R1_9_4;
-		}
+    public static NMSVersion getMinimum() {
+        return values()[values().length - 1];
+    }
 
-		if(tryVersion("1_10_R1"))
-		{
-			return R1_10;
-		}
+    public static NMSVersion getMaximum() {
+        return values()[0];
+    }
 
-		if(tryVersion("1_11_R1"))
-		{
-			return R1_11;
-		}
-
-		if(tryVersion("1_12_R1"))
-		{
-			return R1_12;
-		}
-
-		if(tryVersion("1_13_R2"))
-		{
-			return R1_13;
-		}
-
-		if(tryVersion("1_14_R1"))
-		{
-			return R1_14;
-		}
-		
-		if(tryVersion("1_15_R1"))
-		{
-			return R1_15;
-		}
-
-		return null;
-	}
-
-	private static boolean tryVersion(String v)
-	{
-		try
-		{
-			Class.forName("org.bukkit.craftbukkit.v" + v + ".CraftWorld");
-			return true;
-		}
-
-		catch(Throwable e)
-		{
-
-		}
-
-		return false;
-	}
+    public static NMSVersion current() {
+        return current;
+    }
 }

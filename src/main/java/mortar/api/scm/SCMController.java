@@ -54,7 +54,7 @@ public class SCMController extends Controller
 	@Override
 	public void start()
 	{
-		if(NMSVersion.current().equals(NMSVersion.R1_8))
+		if(NMSVersion.current().equals(NMSVersion.v1_8_R3))
 		{
 			return;
 		}
@@ -366,8 +366,8 @@ public class SCMController extends Controller
 											}
 
 											Location lv = new Location(d[0].getWorld(), aa, bb, cc).clone().add(0.5, 0.5, 0.5).clone().add(push);
-											int color = Color.getHSBColor((float) (0.5f + (Math.sin((aa + bb + cc + (M.ticksOnline() / 2)) / 20f) / 2)), 1, 1).getRGB();
-											new ParticleRedstone().setColor(new Color(color)).play(lv, i);
+											Color color = Color.getHSBColor((float) (0.5f + (Math.sin((aa + bb + cc + (M.ticksOnline() / 2)) / 20f) / 2)), 1, 1);
+											new ParticleRedstone(color).play(lv, i);
 										}
 									}
 								}

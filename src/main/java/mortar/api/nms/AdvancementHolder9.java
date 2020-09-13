@@ -11,9 +11,9 @@ import org.bukkit.plugin.Plugin;
 import net.minecraft.server.v1_9_R2.Item;
 import net.minecraft.server.v1_9_R2.MinecraftKey;
 
-public class AdvancementHolder94 extends AdvancementHolder
+public class AdvancementHolder9 extends AdvancementHolder
 {
-	public AdvancementHolder94(String id, Plugin p)
+	public AdvancementHolder9(String id, Plugin p)
 	{
 		super(id, p);
 	}

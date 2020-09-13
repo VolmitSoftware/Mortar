@@ -45,8 +45,6 @@ public interface CatalystHost extends PacketListener, Listener
 
 	public void sendEntityMetadata(Player p, int eid, List<Object> objects);
 
-	public void relight(Chunk c);
-
 	public Object getMetaEntityRemainingAir(int airTicksLeft);
 
 	public Object getMetaEntityCustomName(String name);

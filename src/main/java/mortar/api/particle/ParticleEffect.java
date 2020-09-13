@@ -1841,7 +1841,7 @@ public enum ParticleEffect
 
 				Class<?> packetClass = PackageType.MINECRAFT_SERVER.getClass(version < 7 ? "Packet63WorldParticles" : "PacketPlayOutWorldParticles");
 
-				if(NMSVersion.current().equals(NMSVersion.R1_13))
+				if(NMSVersion.current().equals(NMSVersion.v1_13_R2))
 				{
 					packetClass = PackageType.MINECRAFT_SERVER.getClass("PacketPlayOutWorldParticles");
 				}

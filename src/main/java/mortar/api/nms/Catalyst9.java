@@ -13,21 +13,20 @@ import mortar.util.reflection.V;
 import mortar.util.text.C;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
-import net.minecraft.server.v1_8_R3.*;
-import net.minecraft.server.v1_8_R3.DataWatcher.WatchableObject;
-import net.minecraft.server.v1_8_R3.IScoreboardCriteria.EnumScoreboardHealthDisplay;
-import net.minecraft.server.v1_8_R3.PacketPlayOutScoreboardScore.EnumScoreboardAction;
-import net.minecraft.server.v1_8_R3.PacketPlayOutTitle.EnumTitleAction;
+import net.minecraft.server.v1_9_R2.*;
+import net.minecraft.server.v1_9_R2.DataWatcher.Item;
+import net.minecraft.server.v1_9_R2.IScoreboardCriteria.EnumScoreboardHealthDisplay;
+import net.minecraft.server.v1_9_R2.PacketPlayOutScoreboardScore.EnumScoreboardAction;
+import net.minecraft.server.v1_9_R2.PacketPlayOutTitle.EnumTitleAction;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.World.Environment;
-import org.bukkit.craftbukkit.v1_8_R3.CraftChunk;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftMetaBook;
+import org.bukkit.craftbukkit.v1_9_R2.CraftChunk;
+import org.bukkit.craftbukkit.v1_9_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_9_R2.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_9_R2.inventory.CraftMetaBook;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -44,13 +43,13 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.*;
 
-public class Catalyst8 extends CatalystPacketListener implements CatalystHost {
+public class Catalyst9 extends CatalystPacketListener implements CatalystHost {
     private final Map<Player, PlayerSettings> playerSettings = new HashMap<>();
     private MethodHandle nextTickListGetter;
 
-    public Catalyst8() {
+    public Catalyst9() {
         try {
-            Field nextTickListField = WorldServer.class.getDeclaredField("M");
+            Field nextTickListField = WorldServer.class.getDeclaredField("nextTickList");
             nextTickListField.setAccessible(true);
             nextTickListGetter = MethodHandles.publicLookup().unreflectGetter(nextTickListField);
         } catch (NoSuchFieldException | IllegalAccessException ignored) {
@@ -59,7 +58,18 @@ public class Catalyst8 extends CatalystPacketListener implements CatalystHost {
 
     @Override
     public void sendAdvancement(Player p, FrameType type, ItemStack is, String text) {
-        // Not supported
+        AdvancementHolder9 a = new AdvancementHolder9(UUID.randomUUID().toString(), MortarAPIPlugin.p);
+        a.withToast(true);
+        a.withDescription("?");
+        a.withFrame(type);
+        a.withAnnouncement(false);
+        a.withTitle(text);
+        a.withTrigger("minecraft:impossible");
+        a.withIcon(is.getData());
+        a.withBackground("minecraft:textures/blocks/bedrock.png");
+        a.loadAdvancement();
+        a.sendPlayer(p);
+        J.s(() -> a.delete(p), 5);
     }
 
     @Override
@@ -68,16 +78,16 @@ public class Catalyst8 extends CatalystPacketListener implements CatalystHost {
         int x = l.getBlockX();
         int y = l.getBlockY();
         int z = l.getBlockZ();
-        net.minecraft.server.v1_8_R3.World w = ((CraftWorld) l.getWorld()).getHandle();
-        net.minecraft.server.v1_8_R3.Chunk chunk = w.getChunkAt(x >> 4, z >> 4);
+        net.minecraft.server.v1_9_R2.World w = ((CraftWorld) l.getWorld()).getHandle();
+        net.minecraft.server.v1_9_R2.Chunk chunk = w.getChunkAt(x >> 4, z >> 4);
         int combined = m.getMaterial().getId() + (m.getData() << 12);
-        IBlockData ibd = net.minecraft.server.v1_8_R3.Block.getByCombinedId(combined);
+        IBlockData ibd = net.minecraft.server.v1_9_R2.Block.getByCombinedId(combined);
 
         if (chunk.getSections()[y >> 4] == null) {
-            chunk.getSections()[y >> 4] = new net.minecraft.server.v1_8_R3.ChunkSection(y >> 4 << 4, chunk.world.worldProvider.o());
+            chunk.getSections()[y >> 4] = new net.minecraft.server.v1_9_R2.ChunkSection(y >> 4 << 4, chunk.world.worldProvider.m());
         }
 
-        net.minecraft.server.v1_8_R3.ChunkSection sec = chunk.getSections()[y >> 4];
+        net.minecraft.server.v1_9_R2.ChunkSection sec = chunk.getSections()[y >> 4];
         sec.setType(x & 15, y & 15, z & 15, ibd);
     }
 
@@ -110,7 +120,7 @@ public class Catalyst8 extends CatalystPacketListener implements CatalystHost {
             }
         }
 
-        net.minecraft.server.v1_8_R3.Chunk c = ((CraftChunk) world.getChunkAt(x, z)).getHandle();
+        net.minecraft.server.v1_9_R2.Chunk c = ((CraftChunk) world.getChunkAt(x, z)).getHandle();
         ChunkSection s = c.getSections()[y];
 
         if (s == null) {
@@ -128,12 +138,12 @@ public class Catalyst8 extends CatalystPacketListener implements CatalystHost {
 
     @Override
     public Object packetChunkUnload(int x, int z) {
-        return new PacketPlayOutMapChunk(new net.minecraft.server.v1_8_R3.Chunk(((CraftWorld) Bukkit.getWorlds().get(0)).getHandle(), x, z), false, 0);
+        return new PacketPlayOutUnloadChunk(x, z);
     }
 
     @Override
     public Object packetChunkFullSend(Chunk chunk) {
-        return new PacketPlayOutMapChunk(((CraftChunk) chunk).getHandle(), chunk.getWorld().getEnvironment().equals(Environment.NORMAL), 65535);
+        return new PacketPlayOutMapChunk(((CraftChunk) chunk).getHandle(), 65535);
     }
 
     @Override
@@ -205,12 +215,12 @@ public class Catalyst8 extends CatalystPacketListener implements CatalystHost {
 
     @Override
     public String getServerVersion() {
-        return "1_8_R3";
+        return "1_9_R2";
     }
 
     @Override
     public String getVersion() {
-        return "1.8.X";
+        return "1.9.X";
     }
 
     @Override
@@ -230,7 +240,7 @@ public class Catalyst8 extends CatalystPacketListener implements CatalystHost {
         addGlobalIncomingListener((player, packet) -> {
             if (packet instanceof PacketPlayInSettings) {
                 PacketPlayInSettings s = (PacketPlayInSettings) packet;
-                playerSettings.put(player, new PlayerSettings(s.a(), new V(s).get("b"), ChatMode.values()[s.c().ordinal()], s.d(), s.e(), true));
+                playerSettings.put(player, new PlayerSettings(s.a(), new V(s).get("b"), ChatMode.values()[s.c().ordinal()], s.d(), s.e(), s.f().equals(EnumMainHand.RIGHT)));
             }
 
             return packet;
@@ -324,7 +334,7 @@ public class Catalyst8 extends CatalystPacketListener implements CatalystHost {
 
     @Override
     public ShadowChunk shadowCopy(Chunk at) {
-        return new ShadowChunk8(at);
+        return new ShadowChunk9(at);
     }
 
     @Override
@@ -350,10 +360,8 @@ public class Catalyst8 extends CatalystPacketListener implements CatalystHost {
 
     @Override
     public Object packetTabHeaderFooter(String h, String f) {
-        PacketPlayOutPlayerListHeaderFooter p = new PacketPlayOutPlayerListHeaderFooter();
-        new V(p).set("a", s(h));
+        PacketPlayOutPlayerListHeaderFooter p = new PacketPlayOutPlayerListHeaderFooter(s(h));
         new V(p).set("b", s(f));
-
         return p;
     }
 
@@ -370,8 +378,8 @@ public class Catalyst8 extends CatalystPacketListener implements CatalystHost {
     @Override
     public Vector getDirection(Object packet) {
         PacketPlayInFlying p = (PacketPlayInFlying) packet;
-        float yaw = p.d();
-        float pitch = p.e();
+        float yaw = p.a(0);
+        float pitch = p.b(0);
         double pitchRadians = Math.toRadians(-pitch);
         double yawRadians = Math.toRadians(-yaw);
         double sinPitch = Math.sin(pitchRadians);
@@ -648,7 +656,11 @@ public class Catalyst8 extends CatalystPacketListener implements CatalystHost {
 
     @Override
     public void updatePassengers(Player p, int vehicle, int... passengers) {
-        throw new UnsupportedOperationException("Unsupported in 1.8!");
+        PacketPlayOutMount mount = new PacketPlayOutMount();
+        V v = new V(mount);
+        v.set("a", vehicle);
+        v.set("b", passengers);
+        sendPacket(p, mount);
     }
 
     @Override
@@ -667,14 +679,12 @@ public class Catalyst8 extends CatalystPacketListener implements CatalystHost {
 
     @Override
     public Object getMetaEntityRemainingAir(int airTicksLeft) {
-        // Integer, Index 1
-        return new WatchableObject(2, 1, airTicksLeft);
+        return new Item<>(new DataWatcherObject<>(1, DataWatcherRegistry.b), airTicksLeft);
     }
 
     @Override
     public Object getMetaEntityCustomName(String name) {
-        // String, Index 2
-        return new WatchableObject(4, 2, name);
+        return new Item<>(new DataWatcherObject<>(2, DataWatcherRegistry.d), name);
     }
 
     @Override
@@ -685,26 +695,25 @@ public class Catalyst8 extends CatalystPacketListener implements CatalystHost {
         bits += sprinting ? 8 : 0;
         bits += swimming ? 10 : 0;
         bits += invisible ? 20 : 0;
+        bits += glowing ? 40 : 0;
+        bits += flyingElytra ? 80 : 0;
 
-        // Byte, Index 0
-        return new WatchableObject(0, 0, bits);
+        return new Item<>(new DataWatcherObject<>(0, DataWatcherRegistry.a), bits);
     }
 
     @Override
     public Object getMetaEntityGravity(boolean gravity) {
-        return null;
+        return new Item<>(new DataWatcherObject<>(5, DataWatcherRegistry.h), gravity);
     }
 
     @Override
     public Object getMetaEntitySilenced(boolean silenced) {
-        // Byte (Boolean), Index 4
-        return new WatchableObject(0, 4, (byte) (silenced ? 1 : 0));
+        return new Item<>(new DataWatcherObject<>(4, DataWatcherRegistry.h), silenced);
     }
 
     @Override
     public Object getMetaEntityCustomNameVisible(boolean visible) {
-        // Byte (Boolean), Index 3
-        return new WatchableObject(0, 3, (byte) (visible ? 1 : 0));
+        return new Item<>(new DataWatcherObject<>(3, DataWatcherRegistry.h), visible);
     }
 
     @Override
@@ -715,7 +724,7 @@ public class Catalyst8 extends CatalystPacketListener implements CatalystHost {
         bits += noBasePlate ? 8 : 0;
         bits += marker ? 10 : 0;
 
-        return new WatchableObject(0, 10, bits);
+        return new Item<>(new DataWatcherObject<>(11, DataWatcherRegistry.a), bits);
     }
 
     @Override

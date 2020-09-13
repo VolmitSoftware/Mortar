@@ -19,7 +19,7 @@ import net.minecraft.server.v1_9_R2.IBlockData;
 import net.minecraft.server.v1_9_R2.PacketPlayOutMapChunk;
 import net.minecraft.server.v1_9_R2.PacketPlayOutUnloadChunk;
 
-public class ShadowChunk94 implements ShadowChunk
+public class ShadowChunk9 implements ShadowChunk
 {
 	private final Chunk actual;
 	private final org.bukkit.Chunk chunk;
@@ -28,7 +28,7 @@ public class ShadowChunk94 implements ShadowChunk
 	private final boolean[] modified;
 	private boolean biomeModified;
 
-	public ShadowChunk94(org.bukkit.Chunk chunk)
+	public ShadowChunk9(org.bukkit.Chunk chunk)
 	{
 		this.chunk = chunk;
 		actual = ((CraftChunk) chunk).getHandle();
