@@ -1,6 +1,6 @@
 package mortar.api.config;
 
-import mortar.lang.json.JSONObject;
+import org.json.JSONObject;
 
 public abstract class WritableObject implements Writable
 {

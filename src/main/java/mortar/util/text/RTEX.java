@@ -1,8 +1,8 @@
 package mortar.util.text;
 
 import mortar.lang.collection.GList;
-import mortar.lang.json.JSONArray;
-import mortar.lang.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * Raw Text EXTRA

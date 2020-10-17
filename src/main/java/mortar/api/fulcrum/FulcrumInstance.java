@@ -75,7 +75,7 @@ import mortar.bukkit.plugin.MortarAPIPlugin;
 import mortar.compute.math.M;
 import mortar.lang.collection.GList;
 import mortar.lang.collection.GSet;
-import mortar.lang.json.JSONException;
+import org.json.JSONException;
 import mortar.logic.io.Hasher;
 import mortar.logic.io.VIO;
 import mortar.util.reflection.V;

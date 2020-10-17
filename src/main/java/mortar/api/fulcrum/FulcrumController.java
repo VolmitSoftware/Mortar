@@ -15,7 +15,7 @@ import mortar.api.fulcrum.util.EntityNMS12.Type;
 import mortar.api.sched.AR;
 import mortar.api.sched.J;
 import mortar.bukkit.plugin.Controller;
-import mortar.lang.json.JSONException;
+import org.json.JSONException;
 
 public class FulcrumController extends Controller
 {

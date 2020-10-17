@@ -13,7 +13,7 @@ import mortar.api.world.P;
 import mortar.bukkit.command.MortarCommand;
 import mortar.bukkit.command.MortarSender;
 import mortar.bukkit.plugin.MortarAPIPlugin;
-import mortar.lang.json.JSONObject;
+import org.json.JSONObject;
 
 public class CommandFulcrumSparse extends MortarCommand
 {

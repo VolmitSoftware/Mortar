@@ -1,6 +1,6 @@
 package mortar.lang.collection;
 
-import mortar.lang.json.JSONArray;
+import org.json.JSONArray;
 
 public class CacheMap<K, V>
 {

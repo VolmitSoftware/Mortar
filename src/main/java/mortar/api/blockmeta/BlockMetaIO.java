@@ -7,7 +7,7 @@ import org.bukkit.World;
 
 import mortar.api.sched.J;
 import mortar.api.sql.UniversalParser;
-import mortar.lang.json.JSONObject;
+import org.json.JSONObject;
 import mortar.logic.io.Hasher;
 import mortar.logic.io.VIO;
 import mortar.util.gross.BlackMagicException;

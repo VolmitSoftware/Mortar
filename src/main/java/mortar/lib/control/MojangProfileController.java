@@ -5,8 +5,8 @@ import java.util.UUID;
 import mortar.bukkit.plugin.Controller;
 import mortar.lang.collection.CacheMap;
 import mortar.lang.collection.GList;
-import mortar.lang.json.JSONArray;
-import mortar.lang.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import mortar.logic.io.VIO;
 
 public class MojangProfileController extends Controller

@@ -16,8 +16,8 @@ import java.util.UUID;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-import mortar.lang.json.JSONArray;
-import mortar.lang.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class UniversalParser
 {

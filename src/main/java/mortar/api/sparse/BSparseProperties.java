@@ -8,8 +8,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 import mortar.api.sql.UniversalParser;
 import mortar.lang.collection.GList;
 import mortar.lang.collection.GMap;
-import mortar.lang.json.JSONException;
-import mortar.lang.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 import mortar.logic.io.Hasher;
 
 public class BSparseProperties implements SparseProperties

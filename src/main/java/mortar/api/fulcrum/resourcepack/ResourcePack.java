@@ -26,7 +26,7 @@ import mortar.compute.math.M;
 import mortar.compute.math.Profiler;
 import mortar.lang.collection.GList;
 import mortar.lang.collection.GMap;
-import mortar.lang.json.JSONObject;
+import org.json.JSONObject;
 import mortar.logic.format.F;
 import mortar.logic.io.Hasher;
 import mortar.logic.io.VIO;

@@ -4,8 +4,8 @@ import org.bukkit.Material;
 
 import mortar.api.fulcrum.Fulcrum;
 import mortar.lang.collection.GList;
-import mortar.lang.json.JSONArray;
-import mortar.lang.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class AllocationUnit
 {

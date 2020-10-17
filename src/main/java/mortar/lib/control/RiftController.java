@@ -14,8 +14,8 @@ import mortar.api.rift.Rift;
 import mortar.api.rift.RiftException;
 import mortar.bukkit.plugin.Controller;
 import mortar.lang.collection.GList;
-import mortar.lang.json.JSONException;
-import mortar.lang.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 import mortar.logic.io.VIO;
 import mortar.util.text.D;
 

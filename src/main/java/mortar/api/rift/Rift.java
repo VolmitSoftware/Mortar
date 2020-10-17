@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.generator.ChunkGenerator;
 
 import mortar.lang.collection.GList;
-import mortar.lang.json.JSONObject;
+import org.json.JSONObject;
 
 public interface Rift
 {

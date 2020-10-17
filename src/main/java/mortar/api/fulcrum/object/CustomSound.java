@@ -8,8 +8,8 @@ import mortar.api.fulcrum.registry.FCURegisteredObject;
 import mortar.api.sound.Audible;
 import mortar.api.sound.Audio;
 import mortar.lang.collection.GList;
-import mortar.lang.json.JSONArray;
-import mortar.lang.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import mortar.util.text.D;
 
 public class CustomSound extends FCURegisteredObject

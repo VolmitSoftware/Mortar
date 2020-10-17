@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 import mortar.compute.math.M;
-import mortar.lang.json.JSONArray;
+import org.json.JSONArray;
 
 /**
  * GLists are Arraylists with special enhancements

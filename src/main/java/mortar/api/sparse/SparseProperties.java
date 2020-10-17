@@ -6,7 +6,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import mortar.lang.collection.GList;
-import mortar.lang.json.JSONObject;
+import org.json.JSONObject;
 import mortar.logic.io.Hasher;
 
 public interface SparseProperties

@@ -21,8 +21,8 @@ import mortar.api.fulcrum.util.DefaultBlockModel;
 import mortar.api.fulcrum.util.DefaultSkinModel;
 import mortar.bukkit.plugin.Mortar;
 import mortar.lang.collection.GMap;
-import mortar.lang.json.JSONException;
-import mortar.lang.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 import mortar.logic.io.VIO;
 
 public class FulcrumRegistry

@@ -3,8 +3,8 @@ package mortar.util.text;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import mortar.lang.json.JSONArray;
-import mortar.lang.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import mortar.util.text.C;
 
 /**

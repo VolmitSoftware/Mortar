@@ -5,7 +5,7 @@ import java.net.URL;
 import mortar.bukkit.plugin.Mortar;
 import mortar.bukkit.plugin.MortarAPIPlugin;
 import mortar.lang.collection.GList;
-import mortar.lang.json.JSONObject;
+import org.json.JSONObject;
 
 public class PackMeta
 {
