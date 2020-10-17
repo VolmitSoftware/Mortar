@@ -248,11 +248,6 @@
         </dependency>
         <!-- Dumb Shit -->
         <dependency>
-            <groupId>ninja.bytecode</groupId>
-            <artifactId>Shuriken</artifactId>
-            <version>1.1</version>
-        </dependency>
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.12</version>
@@ -287,6 +282,11 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20200518</version>
+        </dependency>
+        <dependency>
+            <groupId>org.zeroturnaround</groupId>
+            <artifactId>zt-zip</artifactId>
+            <version>1.14</version>
         </dependency>
     </dependencies>
     <distributionManagement>
