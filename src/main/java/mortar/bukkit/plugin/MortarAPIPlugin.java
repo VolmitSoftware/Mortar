@@ -48,6 +48,9 @@ public class MortarAPIPlugin extends MortarPlugin
 	private CommandMortar mort;
 
 	@Command
+	private CommandRift rift;
+
+	@Command
 	private CommandFulcrum fulcrum;
 
 	@Command

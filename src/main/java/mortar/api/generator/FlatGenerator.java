@@ -2,10 +2,10 @@ package mortar.api.generator;
 
 import java.util.Random;
 
-import mortar.bukkit.compatibility.MaterialEnum;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.generator.ChunkGenerator;
+
+import mortar.bukkit.compatibility.MaterialEnum;
 
 public class FlatGenerator extends ChunkGenerator
 {

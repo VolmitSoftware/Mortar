@@ -4,7 +4,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.TreeMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 import mortar.lang.collection.GList;
@@ -105,17 +104,22 @@ public class Violator
 		return (Constructor<?>) g(id(c, null) + "(" + mx + ")");
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static Field getField(Class<?> c, String name) throws Throwable
 	{
 		if(!h(id(c, null) + "." + name))
 		{
-			try {
+			try
+			{
 				Field f = c.getField(name);
 				f.setAccessible(true);
 				p(id(c, null) + "." + name, f);
-			} catch (NoSuchFieldException e) {
+			}
+			catch(NoSuchFieldException e)
+			{
 				Class s = c.getSuperclass();
-				if (null == s) {
+				if(null == s)
+				{
 					throw e;
 				}
 				Field f = s.getField(name);
@@ -127,17 +131,22 @@ public class Violator
 		return (Field) g(id(c, null) + "." + name);
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static Field getDeclaredField(Class<?> c, String name) throws Throwable
 	{
 		if(!h(id(c, null) + "." + name))
 		{
-			try {
+			try
+			{
 				Field f = c.getDeclaredField(name);
 				f.setAccessible(true);
 				p(id(c, null) + "." + name, f);
-			} catch (NoSuchFieldException e) {
+			}
+			catch(NoSuchFieldException e)
+			{
 				Class s = c.getSuperclass();
-				if (null == s) {
+				if(null == s)
+				{
 					throw e;
 				}
 				Field f = s.getDeclaredField(name);

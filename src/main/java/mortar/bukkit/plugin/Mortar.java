@@ -22,6 +22,7 @@ import mortar.logic.io.VIO;
 import mortar.util.text.C;
 import mortar.util.text.D;
 import mortar.util.text.TXT;
+import mortar.util.text.VersionCodes;
 
 public class Mortar
 {
@@ -139,9 +140,17 @@ public class Mortar
 					bu.close();
 					J.s(() ->
 					{
-						if(version.equals(MortarAPIPlugin.p.getDescription().getVersion()))
+						int grv = VersionCodes.getVersionCode(version);
+						int cv = VersionCodes.getVersionCode(MortarAPIPlugin.p.getDescription().getVersion());
+
+						if(grv == cv)
 						{
 							sender.sendMessage("Mortar is up to date.");
+						}
+
+						else if(grv < cv)
+						{
+							sender.sendMessage("Mortar is ahead of date...");
 						}
 
 						else

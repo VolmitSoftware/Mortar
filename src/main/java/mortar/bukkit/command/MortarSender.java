@@ -2,9 +2,6 @@ package mortar.bukkit.command;
 
 import java.util.Set;
 
-import lombok.Getter;
-import lombok.Setter;
-import org.bukkit.GameMode;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -13,6 +10,8 @@ import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
 
+import lombok.Getter;
+import lombok.Setter;
 import mortar.util.text.C;
 
 /**
@@ -186,7 +185,7 @@ public class MortarSender implements CommandSender
 	@Override
 	public void sendMessage(String[] messages)
 	{
-		for (String str : messages)
+		for(String str : messages)
 			s.sendMessage(C.translateAlternateColorCodes('&', getTag() + str));
 	}
 
